@@ -1,0 +1,6 @@
+*.json
+*.xlsx
+*.csv
+__pycache__
+venv/
+sentiment_analysis/KoBERT
