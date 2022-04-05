@@ -2,5 +2,7 @@
 *.xlsx
 *.csv
 __pycache__
-venv/
 sentiment_analysis/KoBERT
+tags_embedding/cc.ko.300.bin
+chromedriver
+.venv
