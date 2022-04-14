@@ -1,5 +1,5 @@
-from recommendation_api import recommendation_with_tags
-from mypage_api import mypage
+from db_api import lookup_music_info
+from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion
 from sentiment_extract_api import extract_sentiment_from_diary
 from flask import Flask, request, jsonify
 
@@ -14,7 +14,7 @@ def weather_recommendation():
         return 'Bad Request!', 400
     
     # tags for recommendation -> (weather, time)
-    music_list = recommendation_with_tags(weather, time)
+    music_list = music_recommendation_with_tags(weather, time)
     
     return jsonify(
         musicList = music_list
@@ -31,18 +31,24 @@ def diary_recommendation():
     emotion, keywords = extract_sentiment_from_diary(content)
     
     # tags for recommendation -> (emotion, [keywords])
-    music_list = recommendation_with_tags(emotion, keywords)
-    food_list = 
+    music_list = music_recommendation_with_tags(emotion, keywords)
+    food_list = food_recommendation_with_emotion(emotion)
     
     return jsonify(
         musicList = music_list,
         FoodList = food_list,
     )
+
+# 마이페이지에서 music의 정보를 넘기는 API
+@app.route('/mypage', methods=["GET"])
+def request_music_info():
+    musicId = request.args.get('musicId')
+    musicInfo = lookup_music_info(musicId)
     
-    
-@app.route('/mypage')
-def checkmypage():
-    mypage()
+    return jsonify(
+        title = musicInfo['title'],
+        artist = musicInfo['artist']
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
