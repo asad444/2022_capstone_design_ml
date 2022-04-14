@@ -3,6 +3,7 @@
 *.csv
 .venv
 __pycache__
+
 sentiment_analysis/KoBERT
 tags_embedding/cc.ko.300.bin
 crawler/
