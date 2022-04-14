@@ -6,7 +6,7 @@ db_api.py
 db에 접근하는 api들
 """
 
-# musicId -> ()
+# musicId -> {'title': title, 'artist': artist}
 def lookup_music_info(musicId):
     try:
         conn = sqlite3.connect(DB)
