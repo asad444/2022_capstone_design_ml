@@ -40,7 +40,7 @@ def diary_recommendation():
     )
 
 # 마이페이지에서 music의 정보를 넘기는 API
-@app.route('/mypage', methods=["GET"])
+@app.route('/mypage/music', methods=["GET"])
 def request_music_info():
     musicId = request.args.get('musicId')
     musicInfo = lookup_music_info(musicId)

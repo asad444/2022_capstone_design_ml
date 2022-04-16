@@ -12,11 +12,12 @@ music_recommendation_with_tags
     ]
 
 food_recommendation_with_emotion
-    return "list of 2 foods"
+    return "list of 3 foods"
     e.g.,
     [
         {'food1': '엽떡'},
-        {'food2': '제육'}
+        {'food2': '제육'},
+        {'food3': '고추바사삭'}
     ]
 """
 
@@ -32,4 +33,4 @@ def food_recommendation_with_emotion(emotion):
     """
     recommendation with emotion!
     """
-    return [{'food1': '엽떡'}, {'food2': '제육'}]
+    return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
