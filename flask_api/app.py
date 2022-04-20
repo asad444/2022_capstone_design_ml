@@ -1,5 +1,5 @@
 from db_api import lookup_music_info
-from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion
+from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion, behavior_recommendation_with_emotion
 from sentiment_extract_api import extract_sentiment_from_diary
 from flask import Flask, request, jsonify
 
@@ -32,11 +32,13 @@ def diary_recommendation():
     
     # tags for recommendation -> (emotion, [keywords])
     music_list = music_recommendation_with_tags(emotion, keywords)
+    behavior_list = behavior_recommendation_with_emotion(emotion)
     food_list = food_recommendation_with_emotion(emotion)
     
     return jsonify(
         musicList = music_list,
-        FoodList = food_list,
+        behaviorList = behavior_list,
+        FoodList = food_list
     )
 
 # 마이페이지에서 music의 정보를 넘기는 API

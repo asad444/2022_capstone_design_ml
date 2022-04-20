@@ -2,7 +2,7 @@
 recommendation_api.py
 사용자의 일기로부터 감정, 날씨, 시간을 기반으로 음악, 행동, 음식을 추천하는 API
 
-music_recommendation_with_tags
+music_recommendation_with_tags -> list:
     return "list of 20 musics"
     e.g.,
     [
@@ -11,7 +11,7 @@ music_recommendation_with_tags
         ... 
     ]
 
-food_recommendation_with_emotion
+food_recommendation_with_emotion -> list:
     return "list of 3 foods"
     e.g.,
     [
@@ -19,9 +19,18 @@ food_recommendation_with_emotion
         {'food2': '제육'},
         {'food3': '고추바사삭'}
     ]
+
+behavior_recommendation_with_emotion -> list:
+    return "list of 2 behaviors"
+    e.g.,
+    [
+        {'behavior1': '산책하기'},
+        {'behavior2': '영화보기'}
+    ]
+    
 """
 
-def music_recommendation_with_tags(*args):
+def music_recommendation_with_tags(*args: list):
     # tags: ['슬픔', '교수', '운동']
     tags = list(args)
     """
@@ -29,8 +38,14 @@ def music_recommendation_with_tags(*args):
     """
     return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
 
-def food_recommendation_with_emotion(emotion):
+def food_recommendation_with_emotion(emotion: str):
     """
     recommendation with emotion!
     """
     return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
+
+def behavior_recommendation_with_emotion(emotion: str):
+    """
+    recommendation with emotion!
+    """
+    return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
