@@ -1,6 +1,6 @@
 from db_api import lookup_music_info
 from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion, behavior_recommendation_with_emotion
-from sentiment_extract_api import extract_sentiment_from_diary
+from sentiment_extract_api import extract_sentiment_from_diary, extract_keyword_from_diary
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -27,8 +27,9 @@ def diary_recommendation():
     if not content:
         return 'Bad Request!', 400
     
-    # extract tags from diary
-    emotion, keywords = extract_sentiment_from_diary(content)
+    # extract emotion and tags from diary
+    emotion = extract_sentiment_from_diary(content)
+    keywords = extract_keyword_from_diary(content)
     
     # tags for recommendation -> (emotion, [keywords])
     music_list = music_recommendation_with_tags(emotion, keywords)
