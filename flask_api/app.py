@@ -15,13 +15,15 @@ def weather_recommendation():
     if not weather or not time:
         return 'Bad Request!', 400
     
-    music_list = controller.music_recommend(weather = True)
-    # tags for recommendation -> (weather, time)
-    music_list = music_recommendation_with_tags(weather, time)
+    # tags for recommendation -> weather/time
+    music_list = controller.music_recommend(
+        weather = weather,
+        time = time
+    )
     
     return jsonify(
         musicList = music_list
-    )
+    ) if music_list else None
 
 # 감정, 키워드로 음악/행동 추천(일기)
 @app.route('/music/diary', methods=["GET"])
@@ -30,20 +32,22 @@ def diary_recommendation():
     if not content:
         return 'Bad Request!', 400
     
-    # extract emotion and tags from diary
-    emotion = extract_sentiment_from_diary(content)
-    keywords = extract_keyword_from_diary(content)
+    # Get user's diary content and extract emotion/keywords from that
+    controller.get_diary(content)
+    emotion = controller.sentiment_extract()
+    keywords = controller.keyword_extract()
     
-    # tags for recommendation -> (emotion, [keywords])
-    music_list = music_recommendation_with_tags(emotion, keywords)
-    behavior_list = behavior_recommendation_with_emotion(emotion)
-    food_list = food_recommendation_with_emotion(emotion)
+    if emotion and keywords:
+        # Recommend music/food/behavior with emotion/keywords
+        music_list = controller.music_recommend(emotion = emotion, keywords = keywords)
+        food_list = controller.food_recommend(emotion = emotion)
+        behavior_list = controller.behavior_recommend(emotion = emotion)
     
     return jsonify(
-        musicList = music_list,
-        behaviorList = behavior_list,
-        FoodList = food_list
-    )
+        musicList = music_list, 
+        foodList = food_list, 
+        behaviorList = behavior_list
+        ) if music_list and food_list and behavior_list else None
 
 # 마이페이지에서 music의 정보를 넘기는 API
 @app.route('/mypage/music', methods=["GET"])
