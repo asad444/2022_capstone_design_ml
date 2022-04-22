@@ -20,18 +20,53 @@ METHODS
         ]
 """
 
+# requirements
+from krwordrank.word import summarize_with_keywords
+from krwordrank.hangle import normalize
+from konlpy.tag import Okt
+import kss
 
 class extractor:
     def __init__(self):
-        self.model = None   # KoBERT model
-        pass
+        self.keyword_extractor = Keyword_Extractor()
+        self.kobert_model = KoBERT_model()
     
     # extract emotion from content(diary)
     def extract_sentiment_from_diary(self, content):
         emotion = "기쁨"
+        # emotion = self.kobert_model.run()
         return emotion 
     
     # extract keywords from content(diary)
     def extract_keyword_from_diary(self, content):
-        keywords = ['선생', '퇴사', '졸업']
+        keywords = self.keyword_extractor.run(content)
         return keywords
+
+class Keyword_Extractor:
+    def __init__(self, PATH = '../keyword_extract/stopwords-ko.txt', 
+                JVM_PATH = '/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home/bin/java'):
+        self.path = PATH
+        self.okt = Okt(jvmpath=JVM_PATH)
+        # load saved korean stopwords
+        with open(self.path, 'r') as f:
+            self.stopwords = [word.rstrip('\n') for word in f.readlines()]
+            
+    def run(self, text: str):
+        try:
+            sentences = [normalize(sentence, english = True, number = True).replace('.', '') 
+                        for sentence in kss.split_sentences(text)]
+            
+            keywords = summarize_with_keywords(
+                sentences, min_count = 2, max_length = 10,
+                beta = 0.85, max_iter = 10, stopwords = self.stopwords, verbose = False
+            )
+            return [tag for tag in self.okt.nouns(' '.join(keywords)) if tag not in self.stopwords][:3]
+        except:
+            return []
+        
+class KoBERT_model:
+    def __init__(self):    
+        pass
+    
+    def run(self):
+        pass
