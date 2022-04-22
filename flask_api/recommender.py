@@ -5,7 +5,7 @@ extractor로 부터 추출한 감정과 키워드를 기반으로 음악, 행동
 
 METHODS
 
-    - music_recommendation_with_tags(*args: list) -> list:
+    - recommend_music_with_tags(*args: list) -> list:
         return list of 20 musics
         e.g.,
         [
@@ -14,7 +14,7 @@ METHODS
             ... 
         ]
         
-    - food_recommendation_with_emotion(emotion: str) -> list:
+    - recommend_food_with_emotion(emotion: str) -> list:
         return list of 3 foods
         e.g.,
         [
@@ -23,7 +23,7 @@ METHODS
             {'food3': '고추바사삭'}
         ]
         
-    - behavior_recommendation_with_emotion(emotion: str) -> list:
+    - recommend_behavior_with_emotion(emotion: str) -> list:
         return list of 2 behaviors
         e.g.,
         [
@@ -33,22 +33,19 @@ METHODS
     
 """
 
-def music_recommendation_with_tags(*args: list):
-    # tags: ['슬픔', '교수', '운동']
-    tags = list(args)
-    """
-    recommendation with tags!
-    """
-    return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
+class recommender:
+    def __init__(self):
+        pass
+    
+    # recommend 20 musics from user's emotion and tags
+    def recommend_music_with_tags(*args: list):
+        tags = list(args)
+        return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
 
-def food_recommendation_with_emotion(emotion: str):
-    """
-    recommendation with emotion!
-    """
-    return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
+    # recommend 3 foods from user's emotion
+    def recommend_food_with_emotion(emotion: str):
+        return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
 
-def behavior_recommendation_with_emotion(emotion: str):
-    """
-    recommendation with emotion!
-    """
-    return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
+    # recommend 2 behaviors from user's emotion
+    def recommend_behavior_with_emotion(emotion: str):
+        return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
