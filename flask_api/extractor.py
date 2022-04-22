@@ -27,11 +27,11 @@ class extractor:
         pass
     
     # extract emotion from content(diary)
-    def extract_sentiment_from_diary(content):
-        emotion = ""
+    def extract_sentiment_from_diary(self, content):
+        emotion = "기쁨"
         return emotion 
     
     # extract keywords from content(diary)
-    def extract_keyword_from_diary(content):
-        keywords = []
+    def extract_keyword_from_diary(self, content):
+        keywords = ['선생', '퇴사', '졸업']
         return keywords

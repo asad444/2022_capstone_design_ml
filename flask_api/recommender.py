@@ -38,14 +38,14 @@ class recommender:
         pass
     
     # recommend 20 musics from user's emotion and tags
-    def recommend_music_with_tags(emotion: str, *args: list):
+    def recommend_music_with_tags(self, emotion: str, *args: list):
         tags = list(args)
         return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
 
     # recommend 3 foods from user's emotion
-    def recommend_food_with_emotion(emotion: str):
+    def recommend_food_with_emotion(self, emotion: str):
         return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
 
     # recommend 2 behaviors from user's emotion
-    def recommend_behavior_with_emotion(emotion: str):
+    def recommend_behavior_with_emotion(self, emotion: str):
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
