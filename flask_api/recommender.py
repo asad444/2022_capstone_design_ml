@@ -5,7 +5,7 @@ extractor로 부터 추출한 감정과 키워드를 기반으로 음악, 행동
 
 METHODS
 
-    - recommend_music_with_tags(*args: list) -> list:
+    - recommend_music_with_tags(emotion: str, *args: list) -> list:
         return list of 20 musics
         e.g.,
         [
@@ -38,7 +38,7 @@ class recommender:
         pass
     
     # recommend 20 musics from user's emotion and tags
-    def recommend_music_with_tags(*args: list):
+    def recommend_music_with_tags(emotion: str, *args: list):
         tags = list(args)
         return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
 
