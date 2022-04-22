@@ -8,51 +8,54 @@ class main_controller:
         self.extractor = extractor()        # 키워드, 감정 추출 
         self.recommender = recommender()    # 음악, 행동, 음식 추천
         self.diary = None
-        
-        # extracted from diary
-        self.emotion = None
-        self.keywords = []
-        
-        self.musics = []
-        self.foods = []
-        self.behaviors = []
-    
+                
     # load user's diary(content) for recommendation
     def get_diary(self, content):
         self.diary = content
         
     def keyword_extract(self):
+        keywords = []
         if self.diary:
-            self.keywords = self.extractor.extract_keyword_from_diary(self.diary)
+            keywords = self.extractor.extract_keyword_from_diary(self.diary)
         else: print("There is no diary contents!")
         
-        if not self.keywords: print("There are no keywords!")    
+        return keywords if keywords else []
         
     def sentiment_extract(self):
+        emotion = None
         if self.diary:
-            self.emotion = self.extractor.extract_sentiment_from_diary(self.diary)
+            emotion = self.extractor.extract_sentiment_from_diary(self.diary)
         else: print("There is no diary contents!")
         
-        if not self.emotion: print("There is no emotion!")
+        return emotion if emotion else ""
+     
+    def music_recommend(self, **kwargs):
+        musics = []
+        # with kwargs, divide weather/time recommendation and emotion/keywords recommendation
+        if 'weather' in kwargs and 'time' in kwargs:
+            musics = self.recommender.recommend_music_with_tags(
+                kwargs['weather'], kwargs['time'])
         
-    
-    def music_recommend(self):
-        if self.emotion and self.keywords:
-            self.musics = self.recommender.recommend_music_with_tags(self.emotion, self.keywords)
-        else: print("There is no emotion or keywords")
+        elif 'emotion' in kwargs and 'keywords' in kwargs:
+            musics = self.recommender.recommend_music_with_tags(
+                kwargs['emotion'], kwargs['keywords'])
+            
+        else: print("There are no weather/time or emotion/keywords!")
+            
+        return musics if musics else "Music: There are no recommended musics!"
         
-        if not self.musics: print("There are no recommended musics!")
-        
-    def food_recommend(self):
-        if self.emotion:
-            self.foods = self.recommender.recommend_food_with_emotion(self.emotion)
+    def food_recommend(self, **kwargs):
+        foods = []
+        if 'emotion' in kwargs:
+            foods = self.recommender.recommend_food_with_emotion(kwargs['emotion'])
         else: print("There is no emotion!")
         
-        if not self.foods: print("There are no recommended foods")
+        return foods if foods else "Foods: There are no recommended foods"
 
-    def behavior_recommend(self):
-        if self.emotion:
-            self.behaviors = self.recommender.recommend_behavior_with_emotion(self.emotion)
+    def behavior_recommend(self, **kwargs):
+        behaviors = []
+        if 'emotion' in kwargs:
+            behaviors = self.recommender.recommend_behavior_with_emotion(kwargs['emotion'])
         else: print("There is no emotion!")
         
-        if not self.behaviors: print("There are no recommended behaviors!")
+        return behaviors if behaviors else "Behavior: There are no recommended behaviors!"

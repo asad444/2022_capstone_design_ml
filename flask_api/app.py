@@ -1,8 +1,6 @@
 from db_api import lookup_music_info
-from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion, behavior_recommendation_with_emotion
-from extractor import extractor
-from flask import Flask, request, jsonify
 from controller import main_controller
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -17,6 +15,7 @@ def weather_recommendation():
     if not weather or not time:
         return 'Bad Request!', 400
     
+    music_list = controller.music_recommend(weather = True)
     # tags for recommendation -> (weather, time)
     music_list = music_recommendation_with_tags(weather, time)
     
