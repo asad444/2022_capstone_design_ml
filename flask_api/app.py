@@ -1,9 +1,13 @@
 from db_api import lookup_music_info
 from recommendation_api import music_recommendation_with_tags, food_recommendation_with_emotion, behavior_recommendation_with_emotion
-from sentiment_extract_api import extract_sentiment_from_diary, extract_keyword_from_diary
+from extractor import extractor
 from flask import Flask, request, jsonify
+from controller import main_controller
 
 app = Flask(__name__)
+
+# 추천을 위한 API 호출을 담당하는 메인 컨트롤러
+controller = main_controller()
 
 # 날씨/시간으로 음악 추천 (일기 쓰기 전에 첫 페이지)
 @app.route('/music/weather', methods=["GET"])
