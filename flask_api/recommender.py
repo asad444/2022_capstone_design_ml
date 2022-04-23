@@ -32,6 +32,7 @@ METHODS
         ]
     
 """
+import sqlite3
 
 class recommender:
     def __init__(self):
@@ -55,19 +56,38 @@ class recommender:
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
     
 class Music_recommender():
-    def __init__(self):
-        pass    
+    def __init__(self, DB = './db.db'):
+        self.DB = DB
+        
     def run(self, emotion: str, tags: list):
         pass
 
 class Food_recommender():
-    def __init__(self):
-        pass
+    def __init__(self, DB = './db.db'):
+        self.DB = DB
+        
     def run(self, emotion: str):
         pass
 
 class Behavior_recommender():
-    def __init__(self):
-        pass
+    def __init__(self, DB = './db.db'):
+        self.DB = DB
+        self.emo_dict = {'중립': 0, '걱정': 1, '슬픔': 2, '분노': 3, '행복': 4}
+        
     def run(self, emotion: str):
-        pass
+        # DB Connection 
+        try:
+            conn = sqlite3.connect(self.DB)
+            cur = conn.cursor()
+        except:
+            return "DB Connection Error!"
+        
+        # Query
+        try:
+            # 중립 0 / 걱정 1 / 슬픔 2 / 분노 3 / 행복 4
+            
+            pass
+        except:
+            pass
+        
+        
