@@ -35,7 +35,9 @@ METHODS
 
 class recommender:
     def __init__(self):
-        pass
+        self.music_recommender = Music_recommender()
+        self.food_recommender = Food_recommender()
+        self.behavior_recommender = Behavior_recommender()
     
     # recommend 20 musics from user's emotion and tags
     def recommend_music_with_tags(self, emotion: str, *args: list):
@@ -44,8 +46,28 @@ class recommender:
 
     # recommend 3 foods from user's emotion
     def recommend_food_with_emotion(self, emotion: str):
+        # self.food_recommender.run(emotion)
         return [{'food1': '엽떡'}, {'food2': '제육'}, {'food3': '고추바사삭'}]
 
     # recommend 2 behaviors from user's emotion
     def recommend_behavior_with_emotion(self, emotion: str):
+        # self.behavior_recommender.run(emotion)
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
+    
+class Music_recommender():
+    def __init__(self):
+        pass    
+    def run(self, emotion: str, tags: list):
+        pass
+
+class Food_recommender():
+    def __init__(self):
+        pass
+    def run(self, emotion: str):
+        pass
+
+class Behavior_recommender():
+    def __init__(self):
+        pass
+    def run(self, emotion: str):
+        pass
