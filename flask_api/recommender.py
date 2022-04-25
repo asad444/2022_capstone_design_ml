@@ -32,7 +32,7 @@ METHODS
         ]
     
 """
-import sqlite3
+import sqlite3, random
 
 class recommender:
     def __init__(self):
@@ -85,9 +85,12 @@ class Behavior_recommender():
         # Query
         try:
             # 중립 0 / 걱정 1 / 슬픔 2 / 분노 3 / 행복 4
-            
-            pass
+            cur.execute("SELECT `name`, content FROM BEHAVIOR WHERE label = ?", [self.emo_dict[emotion]])
+            result = cur.fetchall()
+            return result[random.randint(0, len(result)-1)]
         except:
-            pass
+            return None
         
-        
+if __name__ == "__main__":
+    recom = Behavior_recommender()
+    print(recom.run("중립"))
