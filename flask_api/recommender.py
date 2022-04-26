@@ -52,7 +52,7 @@ class recommender:
 
     # recommend 2 behaviors from user's emotion
     def recommend_behavior_with_emotion(self, emotion: str):
-        # self.behavior_recommender.run(emotion)
+        # return self.behavior_recommender.run(emotion)
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
     
 class Music_recommender():
@@ -82,7 +82,7 @@ class Behavior_recommender():
         except:
             return "DB Connection Error!"
         
-        # Query
+        # Query for behavior recommendation
         try:
             # 중립 0 / 걱정 1 / 슬픔 2 / 분노 3 / 행복 4
             cur.execute("SELECT `name`, content FROM BEHAVIOR WHERE label = ?", [self.emo_dict[emotion]])
@@ -90,7 +90,7 @@ class Behavior_recommender():
             return result[random.randint(0, len(result)-1)]
         except:
             return None
-        
+
 if __name__ == "__main__":
     recom = Behavior_recommender()
-    print(recom.run("중립"))
+    print(recom.run("분노"))
