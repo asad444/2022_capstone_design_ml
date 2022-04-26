@@ -60,14 +60,32 @@ class Music_recommender():
         self.DB = DB
         
     def run(self, emotion: str, tags: list):
-        pass
+        # DB Connection 
+        try:
+            conn = sqlite3.connect(self.DB)
+            cur = conn.cursor()
+        except:
+            return "DB Connection Error!"
+        
+        conn.commit()
+        conn.close()
+        return None
 
 class Food_recommender():
     def __init__(self, DB = './db.db'):
         self.DB = DB
         
     def run(self, emotion: str):
-        pass
+        # DB Connection 
+        try:
+            conn = sqlite3.connect(self.DB)
+            cur = conn.cursor()
+        except:
+            return "DB Connection Error!"
+        
+        conn.commit()
+        conn.close()
+        return None
 
 class Behavior_recommender():
     def __init__(self, DB = './db.db'):
@@ -87,10 +105,14 @@ class Behavior_recommender():
             # 중립 0 / 걱정 1 / 슬픔 2 / 분노 3 / 행복 4
             cur.execute("SELECT `name`, content FROM BEHAVIOR WHERE label = ?", [self.emo_dict[emotion]])
             result = cur.fetchall()
-            return result[random.randint(0, len(result)-1)]
         except:
-            return None
+            pass
+        finally:
+            conn.commit()
+            conn.close()
+            
+        return result[random.randint(0, len(result)-1)]
 
 if __name__ == "__main__":
     recom = Behavior_recommender()
-    print(recom.run("분노"))
+    print(recom.run("슬픔"))
