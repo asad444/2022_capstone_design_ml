@@ -5,4 +5,4 @@
 __pycache__
 
 sentiment_analysis/KoBERT
-tags_embedding/cc.ko.300.bin
+music/cc.ko.300.bin
