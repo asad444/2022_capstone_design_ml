@@ -3,6 +3,9 @@
 *.csv
 .venv
 __pycache__
+temp.ipynb
+.DS_Store
 
 sentiment_analysis/KoBERT
 music/cc.ko.300.bin
+
