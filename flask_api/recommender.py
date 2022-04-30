@@ -41,8 +41,9 @@ class recommender:
         self.behavior_recommender = Behavior_recommender()
     
     # recommend 20 musics from user's emotion and tags
-    def recommend_music_with_tags(self, emotion: str, *args: list):
-        tags = list(args)
+    def recommend_music_with_tags(self, *args):
+        tags = [*args]
+        self.music_recommender.run(tags)
         return [{'Title': '밤 편지', 'Artist': '아이유'}, {'Title': '가나다라', 'Artist': '박재범'}]
 
     # recommend 3 foods from user's emotion
@@ -55,11 +56,11 @@ class recommender:
         # return self.behavior_recommender.run(emotion)
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
     
-class Music_recommender():
+class Music_recommender:
     def __init__(self, DB = './db.db'):
         self.DB = DB
         
-    def run(self, emotion: str, tags: list):
+    def run(self, tags: list):
         # DB Connection 
         try:
             conn = sqlite3.connect(self.DB)
@@ -71,7 +72,7 @@ class Music_recommender():
         conn.close()
         return None
 
-class Food_recommender():
+class Food_recommender:
     def __init__(self, DB = './db.db'):
         self.DB = DB
         
@@ -87,7 +88,7 @@ class Food_recommender():
         conn.close()
         return None
 
-class Behavior_recommender():
+class Behavior_recommender:
     def __init__(self, DB = './db.db'):
         self.DB = DB
         self.emo_dict = {'중립': 0, '걱정': 1, '슬픔': 2, '분노': 3, '행복': 4}
