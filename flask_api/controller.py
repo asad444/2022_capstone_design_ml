@@ -38,7 +38,7 @@ class main_controller:
         
         elif 'emotion' in kwargs and 'keywords' in kwargs:
             musics = self.recommender.recommend_music_with_tags(
-                kwargs['emotion'], kwargs['keywords'])
+                kwargs['emotion'], *kwargs['keywords'])
             
         else: print("There are no weather/time or emotion/keywords!")
             
