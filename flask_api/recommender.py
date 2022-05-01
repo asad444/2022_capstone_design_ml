@@ -60,7 +60,7 @@ class Music_recommender:
     def __init__(self, DB = './db.db'):
         self.DB = DB
         
-    def run(self, tags: list):
+    def run(self, keywords: list):
         # DB Connection 
         try:
             conn = sqlite3.connect(self.DB)
