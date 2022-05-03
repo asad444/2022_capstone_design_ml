@@ -23,7 +23,7 @@ def weather_recommendation():
     
     return jsonify(
         musicList = music_list
-    ) if music_list else None
+    ) if music_list else "There is no Recoomendation corresponding to that weather/time"
 
 # 감정, 키워드로 음악/행동 추천(일기)
 @app.route('/music/diary', methods=["GET"])
@@ -49,7 +49,7 @@ def diary_recommendation():
         musicList = music_list, 
         foodList = food_list, 
         behaviorList = behavior_list
-        ) if music_list and food_list and behavior_list else None
+        ) if music_list and food_list and behavior_list else "There is no Recommendation corresponding to that emotion!"
     
 # 마이페이지에서 music의 정보를 넘기는 API
 @app.route('/mypage/music', methods=["GET"])
@@ -60,7 +60,7 @@ def request_music_info():
     return jsonify(
         title = musicInfo['title'],
         artist = musicInfo['artist']
-    )
+    ) if musicInfo else "No song Info corresponding to that musicId!"
 
 if __name__ == "__main__":
     app.run(debug=True)

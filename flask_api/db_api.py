@@ -6,25 +6,31 @@ db_api.py
 db에 접근하는 api들
 """
 
-# musicId -> {'title': title, 'artist': artist}
-def lookup_music_info(musicId):
+def connect_to_db(DB = './db.db'):
     try:
         conn = sqlite3.connect(DB)
         cur = conn.cursor()
     except:
-        return "DB Connection Error!"," "
+        conn, cur = None, None
+        pass
+    return conn, cur
 
-    try:
-        cur.execute("SELECT title, artist FROM MUSIC WHERE musicId = ?", [musicId])
-        result = cur.fetchall()
-    except Exception as e:
-        print(e)
-        return "No song information correspoding to musicId"," "
+def disconnect_from_db(conn, cur):
+    if not conn or not cur:
+        return
+    conn.commit()
+    conn.close()
+        
+# musicId -> {'title': title, 'artist': artist}
+def lookup_music_info(musicId):
+    conn, cur = connect_to_db()
     
-    finally:
-        conn.commit()
-        conn.close()
+    cur.execute("SELECT title, artist FROM MUSIC WHERE musicId = ?", [musicId])
+    result = cur.fetchall()
+    if not result:
+        return ""
     
+    disconnect_from_db(conn, cur)
     return {'title': result[0][0], 'artist': result[0][1]}
 
 if __name__ == "__main__":

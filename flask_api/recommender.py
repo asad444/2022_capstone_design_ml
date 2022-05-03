@@ -33,6 +33,7 @@ METHODS
     
 """
 import sqlite3, random
+from db_api import connect_to_db, disconnect_from_db
 
 class recommender:
     def __init__(self):
@@ -57,63 +58,51 @@ class recommender:
         return [{'behavior1': '산책하기'}, {'behavior2': '영화보기'}]
     
 class Music_recommender:
-    def __init__(self, DB = './db.db'):
-        self.DB = DB
-        
+    def __init__(self):
+        pass
+    
     def run(self, keywords: list):
-        # DB Connection 
-        try:
-            conn = sqlite3.connect(self.DB)
-            cur = conn.cursor()
-        except:
-            return "DB Connection Error!"
+        conn, cur = connect_to_db()
         
-        conn.commit()
-        conn.close()
+        """
+        Music Recommendation Logic
+        """
+        
+        disconnect_from_db(conn, cur)
         return None
 
 class Food_recommender:
-    def __init__(self, DB = './db.db'):
-        self.DB = DB
-        
+    def __init__(self):
+        pass
+    
     def run(self, emotion: str):
-        # DB Connection 
-        try:
-            conn = sqlite3.connect(self.DB)
-            cur = conn.cursor()
-        except:
-            return "DB Connection Error!"
+        conn, cur = connect_to_db()
         
-        conn.commit()
-        conn.close()
+        """
+        Food Recommendation Logic
+        """
+        
+        disconnect_from_db(conn, cur)
         return None
 
 class Behavior_recommender:
-    def __init__(self, DB = './db.db'):
-        self.DB = DB
+    def __init__(self):
         self.emo_dict = {'중립': 0, '걱정': 1, '슬픔': 2, '분노': 3, '행복': 4}
         
     def run(self, emotion: str):
-        # DB Connection 
-        try:
-            conn = sqlite3.connect(self.DB)
-            cur = conn.cursor()
-        except:
-            return "DB Connection Error!"
+        conn, cur = connect_to_db()
+         
+        """
+        Behavior Recommendation Logic
+        """
+        cur.execute("SELECT `name`, content FROM BEHAVIOR WHERE label = ?", [self.emo_dict[emotion]])
+        result = cur.fetchall()
+        if not result:
+            return ""
         
-        # Query for behavior recommendation
-        try:
-            # 중립 0 / 걱정 1 / 슬픔 2 / 분노 3 / 행복 4
-            cur.execute("SELECT `name`, content FROM BEHAVIOR WHERE label = ?", [self.emo_dict[emotion]])
-            result = cur.fetchall()
-        except:
-            pass
-        finally:
-            conn.commit()
-            conn.close()
-            
+        disconnect_from_db(conn,cur)
         return result[random.randint(0, len(result)-1)]
 
 if __name__ == "__main__":
     recom = Behavior_recommender()
-    print(recom.run("슬픔"))
+    print(recom.run("중립"))
