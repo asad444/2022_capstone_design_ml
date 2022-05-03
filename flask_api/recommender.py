@@ -32,7 +32,7 @@ METHODS
         ]
     
 """
-import sqlite3, random
+import random
 from db_api import connect_to_db, disconnect_from_db
 
 class recommender:
