@@ -57,6 +57,9 @@ def request_music_info():
     musicId = request.args.get('musicId')
     musicInfo = lookup_music_info(musicId)
     
+    if not musicInfo:
+        return "No song Info correspoding to that musicId!"
+    
     return jsonify(
         title = musicInfo['title'],
         artist = musicInfo['artist']
