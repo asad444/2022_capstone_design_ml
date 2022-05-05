@@ -48,7 +48,8 @@ def diary_recommendation():
     return jsonify(
         musicList = music_list, 
         foodList = food_list, 
-        behaviorList = behavior_list
+        behaviorList = behavior_list,
+        keywordList = keywords
         ) if music_list and food_list and behavior_list else "There is no Recommendation corresponding to that emotion!"
     
 # 마이페이지에서 music의 정보를 넘기는 API

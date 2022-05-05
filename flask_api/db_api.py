@@ -1,17 +1,30 @@
-import sqlite3
-DB = './db.db'
+import pymysql
+HOST = 'flask-db.cuqw33e66jfm.ap-northeast-2.rds.amazonaws.com'
+USER = 'admin'
+PW = 'capstoneml'
+DB = 'recommendation'
+CHARSET = 'utf8'
+PORT = 3306
+
 
 """
 db_api.py
 db에 접근하는 api들
 """
 
-def connect_to_db(DB = './db.db'):
+def connect_to_db():
+    conn, cur = None, None
     try:
-        conn = sqlite3.connect(DB)
+        conn = pymysql.connect(
+            host = HOST,
+            user = USER,
+            password = PW,
+            db = DB,
+            charset = CHARSET,
+            port = PORT
+        )
         cur = conn.cursor()
     except:
-        conn, cur = None, None
         pass
     return conn, cur
 
